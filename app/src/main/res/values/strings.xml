@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">GlobalLogicTest</string>
+    <string name="api_bad_response">Error, try again later&#8230;</string>
+</resources>
