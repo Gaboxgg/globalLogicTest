@@ -21,6 +21,13 @@ public class Info implements Serializable {
     @SerializedName("image")
     private String img;
 
+    public Info(int id, String title,String description,String img){
+        this.id=id;
+        this.title=title;
+        this.description=description;
+        this.img=img;
+    }
+
     public String getTitle() {
         return title;
     }

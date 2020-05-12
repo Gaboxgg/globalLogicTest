@@ -22,6 +22,7 @@ public class InfoViewModel extends AndroidViewModel {
         mAllInfo = mRepository.getAllInfo();
     }
 
+
     public LiveData<List<Info>> getAllInfo() { return mAllInfo; }
 
     public void insert(Info info) { mRepository.insert(info); }

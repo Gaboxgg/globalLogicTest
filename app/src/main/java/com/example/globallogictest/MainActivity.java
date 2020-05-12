@@ -25,10 +25,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        selectFragment("initial");
+        if(savedInstanceState == null)
+            selectFragment();
+        else{
+            InfoDetailFragment myFragment = (InfoDetailFragment) getSupportFragmentManager()
+                    .findFragmentByTag("url");
+        }
     }
 
-    public void selectFragment(String url) {
+    public void selectFragment() {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
         Fragment fragment = new InfoFragment();
@@ -38,10 +43,8 @@ public class MainActivity extends AppCompatActivity {
     public void selectFragment(Info info) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
-        Fragment fragment = new InfoDetailFragment();
-        Bundle bundle=new Bundle();
-        bundle.putSerializable("info",info);
-        fragment.setArguments(bundle);
+        new InfoDetailFragment();
+        Fragment fragment = InfoDetailFragment.newInstance(info);
         transaction.addToBackStack("url");
         transaction.add(R.id.MainLayout, fragment);
         transaction.commit();

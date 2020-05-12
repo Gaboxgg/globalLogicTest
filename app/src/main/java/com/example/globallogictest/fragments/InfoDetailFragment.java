@@ -1,6 +1,8 @@
 package com.example.globallogictest.fragments;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,9 +34,9 @@ public class InfoDetailFragment extends Fragment{
         @BindView(R.id.image)
         ImageView imageImageView;
 
-    public InfoDetailFragment() {
-    }
-        public  Fragment newInstance(Info info) {
+        public InfoDetailFragment() {
+        }
+        public static  InfoDetailFragment newInstance(Info info) {
             InfoDetailFragment fragment = new InfoDetailFragment();
             Bundle bundle=new Bundle();
             bundle.putSerializable("info",info);
@@ -53,13 +55,22 @@ public class InfoDetailFragment extends Fragment{
         @SuppressWarnings("NullableProblems")
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.fragment_info_detail, container, false);
+            int currentOrientation = getResources().getConfiguration().orientation;
+            if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+                // Landscape
+                return inflater.inflate(R.layout.fragment_info_detail_landscape, container, false);
+            }
+            else {
+                // Portrait
+                return inflater.inflate(R.layout.fragment_info_detail, container, false);
+            }
         }
 
         @Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
             super.onViewCreated(view, savedInstanceState);
             ButterKnife.bind(this, view);
             activity = (AppCompatActivity) getActivity();
+            textTextView.setMovementMethod(new ScrollingMovementMethod());
             titleTextView.setText(info.getTitle());
             textTextView.setText(info.getDescription());
             RequestOptions requestOptions = new RequestOptions();
@@ -70,5 +81,7 @@ public class InfoDetailFragment extends Fragment{
                     .load(info.getImg())
                     .into(imageImageView);
         }
+
+
 }
 
